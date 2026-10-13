@@ -10,11 +10,17 @@ Welcome to my cybersecurity CTF write-ups repository! This repository documents 
 - **Write-up:** [Read Write-up](./Wiz-Hello/README.md)
 
 ### 2. [Second CTF Name]
-- **Category:** [Challenge Category]
-- **Tools:** [Tools Used]
+- **Category:** Exposed Files
+- **Tools:** **Tools Used:**
+- Linux Terminal
+- Network File Share Enumeration
+- File Listing and Inspection Commands
+- `cat`
+- `find`
+- `grep`
 - **Write-up:** [Read Write-up](./Second-CTF/README.md)
 
 ---
 
-**Author:** Moonlight  
+**Author:** Mah Noor  
 *Learning, Exploring, and Defending — One Challenge at a Time.*
